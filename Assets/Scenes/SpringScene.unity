@@ -9027,6 +9027,7 @@ GameObject:
   - component: {fileID: 1860029845}
   - component: {fileID: 1860029850}
   - component: {fileID: 1860029851}
+  - component: {fileID: 1860029852}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -9122,6 +9123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed676297d312d694793f5a7c316b8517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  myAnimator: {fileID: 0}
   moveSpeed: 3
   jumpForce: 4
   groundCheck: {fileID: 1201341148}
@@ -9267,6 +9269,28 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.1887997}
   m_Radius: 2.1519482
+--- !u!95 &1860029852
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860029843}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c650de424c5703c4c871cb62afaed6f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

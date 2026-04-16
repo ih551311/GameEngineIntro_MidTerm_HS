@@ -11,6 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: bce0c3789bfae13429592d285e523a53
+  - enabled: 1
+    path: Assets/Scenes/SummerSene.unity
+    guid: 4a8325c04b6fdce45baf68a9a4563a61
+  - enabled: 1
+    path: Assets/Scenes/AutumnScene.unity
+    guid: 2185cffc8a42f0b4bb72a5c48bbe23d1
+  - enabled: 1
+    path: Assets/Scenes/MixScene.unity
+    guid: 9e530d5d2c21cc649bd01a96bd965c5d
+  - enabled: 1
+    path: Assets/Scenes/WimterScene.unity
+    guid: f07d88ce579cda040bcec1fc3cd043aa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

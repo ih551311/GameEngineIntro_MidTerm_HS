@@ -1,13 +1,14 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public Animator myAnimator;
 
     public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    public float jumpForce = 8f;
     public Transform groundCheck;
     public LayerMask groundLayer;
 
@@ -24,11 +25,11 @@ public class PlayerController : MonoBehaviour
     {
         if(moveInput > 0)
         {
-            transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
+            transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
         }
         else if(moveInput < 0)
         {
-            transform.localScale = new Vector3(-0.18f, 0.18f, 0.18f);
+            transform.localScale = new Vector3(-0.13f, 0.13f, 0.13f);
         }
         else
         {
@@ -72,4 +73,20 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Finish"))
+        {
+            collision.GetComponent<LevelObject>().MoveToNextLevel();
+        }
+        if (collision.CompareTag("Respawn"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        if (collision.CompareTag("Enemy"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
 }
+

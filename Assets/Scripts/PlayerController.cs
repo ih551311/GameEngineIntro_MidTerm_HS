@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,9 +7,14 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public Animator myAnimator;
+    public SpriteRenderer sr;
 
-    public float moveSpeed = 5f;
-    public float jumpForce = 8f;
+    public float moveSpeed = 5.0f;
+    public float jumpForce = 8.0f;
+    public float baseMoveSpeed;
+    public float baseJumpForce;
+    public bool isInvincible;
+
     public Transform groundCheck;
     public LayerMask groundLayer;
 
@@ -20,34 +26,10 @@ public class PlayerController : MonoBehaviour
     {
         myAnimator = GetComponent<Animator>();  
         rb = GetComponent<Rigidbody2D>();
-    }
-    private void Update()
-    {
-        if(moveInput > 0)
-        {
-            transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
-        }
-        else if(moveInput < 0)
-        {
-            transform.localScale = new Vector3(-0.13f, 0.13f, 0.13f);
-        }
-        else
-        {
-            myAnimator.SetBool("move", false);
-        }
+        sr = GetComponent<SpriteRenderer>();
 
-            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
-
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-
-        if (isGrounded)
-        {
-            myAnimator.SetBool("jump", false);
-        }
-        else
-        {
-            myAnimator.SetBool("jump", true);
-        }
+        baseMoveSpeed = moveSpeed;
+        baseJumpForce = jumpForce;
     }
 
     public void OnMove(InputValue value)
@@ -83,9 +65,93 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy")&&!isInvincible)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public void Invincibility(float duration)
+    {
+        if (!isInvincible)
+            StartCoroutine(InvincibilityRoutine(duration));
+    }
+
+    private IEnumerator InvincibilityRoutine(float duration)
+    {
+        isInvincible = true;
+        Debug.Log("무적 시작!");
+
+        // 무적 중 깜빡임 효과 (선택)
+        float timer = 0f;
+        while (timer < duration)
+        {
+            sr.enabled = !sr.enabled;
+            yield return new WaitForSeconds(0.1f);
+            timer += 0.1f;
+        }
+        sr.enabled = true;
+
+        isInvincible = false;
+        Debug.Log("무적 종료");
+    }
+
+    public void SpeedBoost(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedBoostRoutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedBoostRoutine(float multiplier, float duration)
+    {
+        moveSpeed = baseMoveSpeed * multiplier;
+        Debug.Log("이동속도 증가!");
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = baseMoveSpeed;
+        Debug.Log("이동속도 원상복구");
+    }
+
+    public void JumpBoost(float multiplier, float duration)
+    {
+        StartCoroutine(JumpBoostRoutine(multiplier, duration));
+    }
+
+    private IEnumerator JumpBoostRoutine(float multiplier, float duration)
+    {
+        jumpForce = baseJumpForce * multiplier;
+        Debug.Log("점프력 증가!");
+
+        yield return new WaitForSeconds(duration);
+
+        jumpForce = baseJumpForce;
+        Debug.Log("점프력 원상복구");
+    }
+    private void Update()
+    {
+        if(moveInput > 0)
+        {
+            transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
+        }
+        else if(moveInput < 0)
+        {
+            transform.localScale = new Vector3(-0.13f, 0.13f, 0.13f);
+        }
+        else
+        {
+            myAnimator.SetBool("move", false);
+        }
+
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+        if (isGrounded)
+        {
+            myAnimator.SetBool("jump", false);
+        }
+        else
+        {
+            myAnimator.SetBool("jump", true);
         }
     }
 }

@@ -14,7 +14,7 @@ public class GameRestarter : MonoBehaviour
     {
         if (gameObject.transform.position.y < -7.0)
         {
-            SceneManager.LoadScene("SpringScene");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

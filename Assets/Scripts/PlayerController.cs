@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public float baseMoveSpeed;
     public float baseJumpForce;
     public bool isInvincible;
+
+   float score;
 
     public Transform groundCheck;
     public LayerMask groundLayer;
@@ -27,6 +31,7 @@ public class PlayerController : MonoBehaviour
         myAnimator = GetComponent<Animator>();  
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        score = 0f;
 
         baseMoveSpeed = moveSpeed;
         baseJumpForce = jumpForce;
@@ -59,26 +64,30 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Finish"))
         {
+            HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)score);
             collision.GetComponent<LevelObject>().MoveToNextLevel();
         }
         if (collision.CompareTag("Respawn"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        if (collision.CompareTag("Enemy")&&!isInvincible)
+        if (collision.CompareTag("Enemy") && !isInvincible)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-    }
 
+    }
     public void Invincibility(float duration)
     {
+
+            score += 10f;
         if (!isInvincible)
             StartCoroutine(InvincibilityRoutine(duration));
     }
 
     private IEnumerator InvincibilityRoutine(float duration)
     {
+
         isInvincible = true;
         Debug.Log("무적 시작!");
 
@@ -98,6 +107,7 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedBoost(float multiplier, float duration)
     {
+        score += 10f;
         StartCoroutine(SpeedBoostRoutine(multiplier, duration));
     }
 
@@ -114,6 +124,7 @@ public class PlayerController : MonoBehaviour
 
     public void JumpBoost(float multiplier, float duration)
     {
+        score += 20f;
         StartCoroutine(JumpBoostRoutine(multiplier, duration));
     }
 

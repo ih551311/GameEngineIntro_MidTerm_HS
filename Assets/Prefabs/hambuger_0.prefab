@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5435010582578030501}
   - component: {fileID: 5244505823045535662}
   - component: {fileID: 5664478231339868873}
+  - component: {fileID: 6883397384332610016}
   m_Layer: 0
   m_Name: hambuger_0
   m_TagString: Untagged
@@ -154,3 +155,16 @@ MonoBehaviour:
   itemType: 2
   duration: 5
   value: 2.29
+--- !u!114 &6883397384332610016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8230665479666352501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12e9dcf401521e489b7d4c9f71ef98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemObject
+  data: {fileID: 11400000, guid: 54bf96b670572f34a8f545a8bbdb9783, type: 2}

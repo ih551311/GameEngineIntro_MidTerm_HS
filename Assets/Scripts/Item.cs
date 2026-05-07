@@ -16,7 +16,7 @@ public class PickUpItem : MonoBehaviour
             {
                 switch (itemType)
                 {
-                    case ItemType.Invincible:
+                    case ItemType.Invincible: 
                         player.Invincibility(duration);
                         break;
 
